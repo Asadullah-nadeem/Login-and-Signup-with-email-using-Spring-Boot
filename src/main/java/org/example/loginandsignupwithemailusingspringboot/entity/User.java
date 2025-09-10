@@ -1,22 +1,26 @@
 package org.example.loginandsignupwithemailusingspringboot.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 
-@Data
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String Username;
+    @Column(nullable = false, unique = true)
+    private String username;
 
-    @Column(unique = true)
-    private String Email;
+    @Column(nullable = false, unique = true)
+    private String email;
 
     private String password;
 

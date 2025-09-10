@@ -12,7 +12,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-@Component
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
@@ -30,12 +29,12 @@ public class JwtFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
 
-        final String authHeader = request.getHeader("Authorization");
-        if(authHeader != null && authHeader.startsWith("Bearer ")){
+        final String authHeader = request.getHeader("X-API-KEY");
+        if(authHeader != null && authHeader.startsWith("Key ")){
             String token = authHeader.substring(7);
             try{
                 String email = jwtUtil.extractEmail(token);
-                userRepository.findByName(email).orElseThrow(
+                userRepository.findByEmail(email).orElseThrow(
                         () -> new RuntimeException("User not Found")
                 );
 
